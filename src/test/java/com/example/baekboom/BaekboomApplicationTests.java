@@ -1,5 +1,7 @@
 package com.example.baekboom;
 
+import com.example.baekboom.backend.crawling.ProblemSolvercrawling;
+import com.example.baekboom.backend.crawling.tierProblemcrawling;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.example.baekboom.crawling.*;

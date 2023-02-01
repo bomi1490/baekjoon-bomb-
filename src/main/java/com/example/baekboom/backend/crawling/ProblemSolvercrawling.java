@@ -1,4 +1,4 @@
-package com.example.baekboom.crawling;
+package com.example.baekboom.backend.crawling;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
