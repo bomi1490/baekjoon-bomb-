@@ -2,19 +2,18 @@ server:
   port:8080
 
 spring:
-datasource:
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/baekbombdb?serverTimezone=Asia/Seoul
-  username: newuser
-  password:
-h2.console:
-  enabled: true # 콘솔 사용 여부, 로컬에서 웹 브라우저로도 접속 가능
-jpa:
-  hibernate:
-    ddl-auto: create # 테이블을 자동으로 생성함
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/baekbombdb?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: choi0924
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create # 테이블을 자동으로 생성함
   properties:
     hibernate:
       format_sql: true # SQL 로그 출력
 logging:
-level:
-  org.hibernate.SQL: debug # SQL 로그 출력을 위한 로그 레벨 조정
+  level:
+    org.hibernate.SQL: debug # SQL 로그 출력을 위한 로그 레벨 조정
