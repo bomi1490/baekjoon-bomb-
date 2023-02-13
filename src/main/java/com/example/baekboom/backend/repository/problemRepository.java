@@ -8,5 +8,6 @@ import java.util.List;
 public interface problemRepository extends JpaRepository<ProblemEntity, Long> {
 
 
-    List<ProblemEntity> findAllByLevelAndUser(Long level); // 크롤링할 때 사용하여 동일한 level을 제거
+    List<ProblemEntity> findAllByLevelAndUser(Long level, String user_id); // 크롤링할 때 사용하여 동일한 level을 제거
+
 }
