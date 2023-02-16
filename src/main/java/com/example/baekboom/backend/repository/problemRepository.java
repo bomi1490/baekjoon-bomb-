@@ -2,9 +2,11 @@ package com.example.baekboom.backend.repository;
 
 import com.example.baekboom.backend.entity.ProblemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface problemRepository extends JpaRepository<ProblemEntity, Long> {
 
 

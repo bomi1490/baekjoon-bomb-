@@ -20,9 +20,8 @@ import java.util.List;
 public class TeamEntity {
     //level int, bomb, team_code, 팀 코드, 구성원
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_code")
-    private String team_code;
+    private String teamcode;
 
     @NotNull
     @Column(name = "level")
@@ -35,7 +34,7 @@ public class TeamEntity {
     private String team_leader;
 
     @OneToMany(mappedBy = "team", fetch =FetchType.LAZY)
-    private List<MemberEntity> members = new ArrayList<>();
+    private List<MemberEntity> members;
 
 
 

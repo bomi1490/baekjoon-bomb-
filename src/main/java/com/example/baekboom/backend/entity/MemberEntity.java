@@ -6,11 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,7 +41,7 @@ public class MemberEntity {
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<ProblemEntity> problems = new ArrayList<>();
+    private List<ProblemEntity> problems;
 
 
     public void setTeam(TeamEntity team){
