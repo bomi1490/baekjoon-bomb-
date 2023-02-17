@@ -10,7 +10,9 @@ import com.example.baekboom.backend.repository.teamRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class memberDao {
@@ -36,11 +38,14 @@ public class memberDao {
     }
 
     // 회원 가입 할때 필요
-    public List<String> getTeamMember(String team_code){
+    public Map<String, Long> getTeamMember(String team_code){
+        Map<String, Long> map = new HashMap<>();
+
         List<MemberEntity> memberEntities = memberrepository.findAllByTeam_Teamcode(team_code);
-        List<String> entities = new ArrayList<>();
-        memberEntities.forEach(item -> entities.add(item.getUser_id()));
-        return entities;
+
+        memberEntities.forEach(item -> map.put(item.getUser_id(), item.getScore()));
+
+        return map;
     }
 
 
