@@ -1,15 +1,14 @@
 package com.example.baekboom.backend.dao;
 
+import com.example.baekboom.backend.dto.memberDto;
 import com.example.baekboom.backend.entity.MemberEntity;
 import com.example.baekboom.backend.entity.TeamEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import com.example.baekboom.backend.dto.memberDto;
 import com.example.baekboom.backend.repository.memberRepository;
 import com.example.baekboom.backend.repository.teamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class memberDao {
 
     public memberDto getMember(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
-        memberDto member = new memberDto(memberEntity.getUser_id(),memberEntity.getName(),
+        memberDto member = new memberDto(memberEntity.getUser_id(),
                 memberEntity.getScore(), memberEntity.getBomb_yn(), memberEntity.getTeam().getTeamcode());
 
         return member;

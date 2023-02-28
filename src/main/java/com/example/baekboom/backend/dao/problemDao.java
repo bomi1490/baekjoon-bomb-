@@ -25,7 +25,7 @@ public class problemDao {
     }
     // 문제를 맞추면 넣음
 
-    public void saveMember(problemDto problem){
+    public void saveproblem(problemDto problem){
         MemberEntity member = memberRepository.getReferenceById(problem.getUser_id());
         ProblemEntity problemEntity = new ProblemEntity();
         problemEntity.setProblem(problem.getProblem());
