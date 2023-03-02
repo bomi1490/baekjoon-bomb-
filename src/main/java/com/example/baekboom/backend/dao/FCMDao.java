@@ -18,9 +18,10 @@ public class FCMDao {
 
 
     // 토큰을 저장하는 메서드
-    public void saveToken(String id, String team_code, String token){
+    public void saveToken(String id, String team_code, String longintoken,  String fcmtoken){
         TokenEntity tokenEntity = new TokenEntity();
-        tokenEntity.setToken(token);
+        tokenEntity.setFcmtoken(fcmtoken);
+        tokenEntity.setLogintoken(longintoken);
         tokenEntity.setUser(id);
         tokenEntity.setTeam(team_code);
         tokenRepository.save(tokenEntity);
@@ -29,10 +30,10 @@ public class FCMDao {
 
     
     // 저장한 토큰들을 team 이름으로 repository에서 가져오고 List로 가져옴
-    public List<String> getToken(String team){
+    public List<String> getfcmToken(String team){
         List<String> tokens = new ArrayList<>();
         List<TokenEntity> tokenEntities = tokenRepository.findAllByTeam(team);
-        tokenEntities.forEach(item -> tokens.add(item.getToken()));
+        tokenEntities.forEach(item -> tokens.add(item.getFcmtoken()));
         return tokens;
     }
 }
