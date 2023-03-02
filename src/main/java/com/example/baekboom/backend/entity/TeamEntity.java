@@ -8,19 +8,20 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuperBuilder
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name="Team")
+@Table(name="team")
 public class TeamEntity {
     //level int, bomb, team_code, 팀 코드, 구성원
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_code")
-    private String team_code;
+    private String teamcode;
 
     @NotNull
     @Column(name = "level")
@@ -29,9 +30,14 @@ public class TeamEntity {
     @Column(name = "bomb")
     private String bomb_pos;
 
-    @NotNull
-    @Column(name = "team_name")
-    private String team_name;
+    @Column(name = "team_leader")
+    private String team_leader;
+
+    @OneToMany(mappedBy = "team", fetch =FetchType.LAZY)
+    private List<MemberEntity> members;
+
+
+
 
 
 }

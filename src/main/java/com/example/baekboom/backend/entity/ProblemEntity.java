@@ -1,7 +1,6 @@
 package com.example.baekboom.backend.entity;
 
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "Problem")
+@Table(name = "problem")
 public class ProblemEntity {
 
     @Id

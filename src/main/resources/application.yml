@@ -4,13 +4,13 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/baekbombdb?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/baekbombdb?useSSL=false
     username: root
     password: choi0924
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create # 테이블을 자동으로 생성함
+     # ddl-auto: create # 테이블을 자동으로 생성함
   properties:
     hibernate:
       format_sql: true # SQL 로그 출력
