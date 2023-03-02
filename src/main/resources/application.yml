@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://baekbombdb?useSSL=false
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/baekbombdb?useSSL=false
+    username: root
+    password: choi0924
   jpa:
     generate-ddl: true
     hibernate:

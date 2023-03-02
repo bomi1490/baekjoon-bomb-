@@ -1,10 +1,12 @@
 package com.example.baekboom.backend.crawling;
 
+import com.example.baekboom.backend.dao.FCMDao;
 import com.example.baekboom.backend.dao.memberDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.baekboom.backend.service.FirebaseService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,9 +15,13 @@ import java.util.List;
 public class ProblemSolvercrawling {
 
     private final memberDao memberDao;
+    private final FirebaseService firebaseService;
+    private final FCMDao fcmDao;
     @Autowired
-    public ProblemSolvercrawling(memberDao memberDao){
+    public ProblemSolvercrawling(memberDao memberDao, FirebaseService firebaseService, FCMDao fcmDao){
         this.memberDao = memberDao;
+        this.firebaseService = firebaseService;
+        this.fcmDao = fcmDao;
     }
 
     public class Tuple<K, V>{
@@ -82,29 +88,33 @@ public class ProblemSolvercrawling {
 
 
 
-    public Tuple<String, String> catch_solver(List<Long> problems, String team){
+    public Tuple<String, String> catch_solver(List<Long> problems, String team) throws IOException{
         Tuple<String, String> solved_member = new Tuple<>();
-                List<String> members = get_team_member(team);
+        List<String> members = get_team_member(team);
                 // 문제 하나씩 돌아가면서 돌려야 함
-                while(true){
-                    Boolean Flag = Boolean.TRUE;
-                    for(Long problem : problems){
-                        String crawlingURL = String.format("https://www.acmicpc.net/problem/status/%s", problem.toString());
-                        Elements elements = crawl_document(crawlingURL);
-                        List<String> solver_and_time = elements.eachText();
-                        solved_member = get_solved_member(solver_and_time, members);
+        while(Boolean.TRUE){
+            Boolean Flag = Boolean.TRUE;
+            for(Long problem : problems){
+                String crawlingURL = String.format("https://www.acmicpc.net/problem/status/%s", problem.toString());
+                Elements elements = crawl_document(crawlingURL);
+                List<String> solver_and_time = elements.eachText();
+                solved_member = get_solved_member(solver_and_time, members);
 
-                        if (!solved_member.getName().isEmpty()){
-                            Flag = Boolean.FALSE;
-                            break;}
-                        sleeping();
-                    }
-                    if (Flag == Boolean.FALSE){
-                        break;
+                if (!solved_member.getName().isEmpty()){
+                    Flag = Boolean.FALSE;
+                    break;}
+                sleeping();
+            }
+            if (Flag == Boolean.FALSE){
+                break;
             }
 
         }
+        List<String> tokens = fcmDao.getToken(team);
         // 푸쉬 알림 기능 넣기
+        for (String token : tokens){
+            firebaseService.sendMessage(solved_member.getName(), solved_member.getTime(), token);
+        }
 
         return solved_member;
     }

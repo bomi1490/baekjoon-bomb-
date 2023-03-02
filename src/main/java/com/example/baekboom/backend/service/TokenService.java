@@ -14,8 +14,4 @@ public class TokenService {
     public void register(String user_id, String token){
         tokenMap.put(user_id, token);
     }
-
-    private void createReceiveNotification(DownloadAccountResponse.User receiver){
-        if (receiver.is)
-    }
 }
