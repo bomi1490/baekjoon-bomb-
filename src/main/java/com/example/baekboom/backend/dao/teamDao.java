@@ -17,11 +17,12 @@ public class teamDao {
     }
 
     // 팀이 맨 처음 만들어질 때 사용되는 메소드
-    public void saveTeam(String team_code, Long level){
+    public void saveTeam(String team_code, Long level, String team_leader){
         TeamEntity teamEntity = new TeamEntity();
         teamEntity.setTeamcode(team_code);
         teamEntity.setLevel(level);
         teamEntity.setBomb_pos(null);
+        teamEntity.setTeam_leader(team_leader);
         teamRepository.save(teamEntity);
     }
 

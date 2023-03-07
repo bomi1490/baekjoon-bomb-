@@ -22,18 +22,18 @@ public class JoinService {
     // 회원 가입할 때 사용되는 Service 구문
     public void memberJoin(String team_code, String ID){
         if (memberDao.getTeamMember(team_code).isEmpty()){ // 만약 팀원이 없으면 팀장으로 설정하려고 함
-            memberDao.saveMember(team_code,ID);
-            teamDao.changedTeamLeader(ID, team_code);
+            // pass
         } else {
             memberDao.saveMember(team_code,ID);
         }
     }
 
     // 처음에 팀을 만들 때 사용되는 Service 구문
-    public void teamJoin(String team_code, String level){
+    public void teamJoin(String team_code, String team_leader, String level){
         Tier tier = Tier.valueOf(level);
-        Long ordinal = Long.valueOf(tier.ordinal() + 1);
-        teamDao.saveTeam(team_code, ordinal);
+        Long ordinal = Long.valueOf(tier.ordinal());
+        teamDao.saveTeam(team_code, ordinal, team_leader);
+        memberDao.saveMember(team_code, team_leader);
     }
 
 }
