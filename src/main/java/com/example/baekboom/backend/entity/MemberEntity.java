@@ -38,9 +38,6 @@ public class MemberEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ProblemEntity> problems;
 
-//    @Transient
-//    private String bomb_pos;
-
     public void setTeam(TeamEntity team){
         this.team = team;
         if (!team.getMembers().contains(this)){

@@ -113,7 +113,11 @@ public class ProblemSolvercrawling {
         List<String> tokens = fcmDao.getfcmToken(team);
         // 푸쉬 알림 기능 넣기
         for (String token : tokens){
-            firebaseService.sendMessage(solved_member.getName(), solved_member.getTime(), token);
+            try {
+                firebaseService.sendMessage(solved_member.getName(), solved_member.getTime(), token);
+            } catch (IOException e){
+
+            }
         }
 
         return solved_member;

@@ -28,10 +28,6 @@ public class TokenEntity {
     private String fcmtoken;
 
     @NotNull
-    @Column(name = "logintoken")
-    private String logintoken;
-
-    @NotNull
     @Column(name = "team") // 팀 이름 -> 서칭의 용이성을 위함
     private String team;
 }

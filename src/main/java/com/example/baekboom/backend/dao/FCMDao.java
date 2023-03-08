@@ -20,14 +20,17 @@ public class FCMDao {
 
 
     // 토큰을 저장하는 메서드
-    public void saveToken(String id, String team_code, String longintoken,  String fcmtoken){
+    public void saveToken(String id, String team_code, String fcmtoken){
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setFcmtoken(fcmtoken);
-        tokenEntity.setLogintoken(longintoken);
         tokenEntity.setUser(id);
         tokenEntity.setTeam(team_code);
         tokenRepository.save(tokenEntity);
         
+    }
+
+    public void deleteToken(String id){
+        tokenRepository.deleteById(id);
     }
 
     

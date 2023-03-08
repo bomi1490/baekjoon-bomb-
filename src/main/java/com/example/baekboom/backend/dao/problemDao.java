@@ -36,7 +36,7 @@ public class problemDao {
     }
 
     public List<Long> get_problems_with_level(String user_id, Long level){
-        List<ProblemEntity> problems = problemRepository.findAllByLevelAndUser(level, user_id);
+        List<ProblemEntity> problems = problemRepository.findAllByLevelAndUser_UserId(level, user_id);
         List<Long> return_problems = new ArrayList<>();
         problems.forEach(item -> return_problems.add(item.getLevel()));
         return return_problems;
