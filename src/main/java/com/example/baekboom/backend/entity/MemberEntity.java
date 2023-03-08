@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -34,7 +35,6 @@ public class MemberEntity {
     @JoinColumn(name = "team_code")
     private TeamEntity team;
 
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ProblemEntity> problems;
 
@@ -45,5 +45,7 @@ public class MemberEntity {
         }
     }
 
-
+//    public void setBombPos(String bomb_pos) {
+//        this.bomb_pos = bomb_pos;
+//    }
 }

@@ -27,7 +27,7 @@ public class TeamEntity {
     @Column(name = "level")
     private Long level;
 
-    @Column(name = "bomb")
+    @Column(name = "bomb_pos")
     private String bomb_pos;
 
     @Column(name = "team_leader")
@@ -35,8 +35,6 @@ public class TeamEntity {
 
     @OneToMany(mappedBy = "team", fetch =FetchType.LAZY)
     private List<MemberEntity> members;
-
-
 
 
 

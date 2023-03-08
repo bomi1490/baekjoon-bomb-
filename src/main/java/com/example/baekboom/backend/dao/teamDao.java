@@ -6,6 +6,7 @@ import com.example.baekboom.backend.entity.TeamEntity;
 import com.example.baekboom.backend.repository.teamRepository;
 import com.example.baekboom.backend.dto.teamDto;
 
+import java.util.List;
 @Component
 public class teamDao {
 
@@ -43,6 +44,7 @@ public class teamDao {
         team.setTeam_leader(teamLeader);
         teamRepository.save(team);
     }
+
 
 
 }
