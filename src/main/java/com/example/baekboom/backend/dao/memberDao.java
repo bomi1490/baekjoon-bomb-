@@ -6,6 +6,7 @@ import com.example.baekboom.backend.entity.TeamEntity;
 import com.example.baekboom.backend.repository.memberRepository;
 import com.example.baekboom.backend.repository.teamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -18,8 +19,9 @@ public class memberDao {
     private final memberRepository memberrepository;
     private final teamRepository teamRepository;
 
+    // memberRepositoryImpl 추가로 인한 @Qualifier 추가
     @Autowired
-    public memberDao(memberRepository memberrepository, teamRepository teamRepository){
+    public memberDao(@Qualifier("memberRepository") memberRepository memberrepository, teamRepository teamRepository){
         this.memberrepository = memberrepository;
         this.teamRepository =teamRepository;
     }
@@ -47,7 +49,7 @@ public class memberDao {
         return map;
     }
 
-
+    // entity로 수정
     public memberDto getMember(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
         memberDto member = new memberDto(memberEntity.getUser_id(),
