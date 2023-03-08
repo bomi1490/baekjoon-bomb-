@@ -4,10 +4,12 @@ package com.example.baekboom.backend.dao;
 import com.example.baekboom.backend.repository.tokenRepository;
 import com.example.baekboom.backend.entity.TokenEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class FCMDao {
 
     private final tokenRepository tokenRepository;

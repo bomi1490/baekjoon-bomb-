@@ -27,7 +27,7 @@ public class ProblemEntity {
     @Column(name = "event_time")
     private LocalDateTime event_time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private MemberEntity user;
 }
