@@ -15,7 +15,6 @@ public class teamDto {
     private String team_code;
     private Long level;
     private String bomb_pos;
-
     private String team_leader;
 
     public teamDto(String team_code, Long level, String bomb_pos, String team_leader){

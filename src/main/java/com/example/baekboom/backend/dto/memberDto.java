@@ -24,4 +24,7 @@ public class memberDto {
     private Boolean bomb_yn;
     private String team_code;
 
+    public void setIsBomb(boolean bomb_yn) {
+        this.bomb_yn = bomb_yn;
+    }
 }
