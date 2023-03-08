@@ -34,8 +34,8 @@ public class TeamSetController {
 
     // 팀 코드를 url을 통해 입력받고, service에서 generateRandomBombPos 메소드 실행.
     @PostMapping("/{team_code}/random-bomb-pos")
-    public void generateRandomBombPos(@PathVariable String team_code) {
-        teamSetService.generateRandomBombPos(team_code);
+    public void generateRandomBombPos(@PathVariable String team_code, int hours) {
+        teamSetService.generateRandomBombPos(team_code, hours);
     }
 
     //

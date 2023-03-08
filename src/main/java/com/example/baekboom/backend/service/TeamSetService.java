@@ -6,19 +6,30 @@ import com.example.baekboom.backend.entity.TeamEntity;
 import com.example.baekboom.backend.repository.teamRepository;
 import com.example.baekboom.backend.repository.memberRepository;
 import com.example.baekboom.backend.repository.problemRepository;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class TeamSetService {
+public class TeamSetService extends Thread{
     private final teamRepository teamRepository;
     private final memberRepository memberRepository;
     private final problemRepository problemRepository;
+    private LocalDateTime globalBombStartTime;
+
+    public void setGlobalBombStartTime(LocalDateTime time){
+        this.globalBombStartTime = time;
+    }
+
+    public LocalDateTime getGlobalBombStartTime(){
+        return this.globalBombStartTime;
+    }
 
     public TeamSetService(memberRepository memberRepository, teamRepository teamRepository, problemRepository problemRepository) {
         this.memberRepository = memberRepository;
@@ -41,24 +52,24 @@ public class TeamSetService {
     }
 
     // team_code를 인자로 받아 멤버 리스트 생성.
-    public void generateRandomBombPos(String team_code) {
+    public void generateRandomBombPos(String team_code, int hours) {
+        TeamEntity team = getTeamById(team_code);
         List<MemberEntity> members = getMembersByTeamCode(team_code);
         int memberCount = members.size();
         int randomIndex = (int) (Math.random() * members.size());
         // 멤버 리스트를 쭉 돌며 랜덤 생성된 인덱스와 일치하면 Bomb_yn을 true, bomb_pos는 인덱스 + 1로 바꿈.
-        for (int i = 0; i < memberCount; i++) {
-            MemberEntity memberEntity = members.get(i);
-            if (i == randomIndex) {
-                memberEntity.setBombYn(true);
-                memberEntity.setBombPos(String.format("%02d", i + 1));
 
-                ProblemEntity problemEntity = new ProblemEntity();
-                problemEntity.setUser(memberEntity.getUser_id());
-                problemEntity.setEvent_time(LocalDateTime.now());
+        for (int i = 0; i < memberCount; i++) {
+            MemberEntity memberEntity = members.get(randomIndex);
+            if (i == randomIndex) {
+                memberEntity.setBomb_yn(true);
+                team.setBomb_pos(memberEntity.getUser_id());
+                setGlobalBombStartTime(LocalDateTime.now().plusHours(hours));
             } else {
-                memberEntity.setBombYn(false);
-                memberEntity.setBombPos(null);
+                memberEntity.setBomb_yn(false);
             }
+            teamRepository.save(team);
+
         }
     }
 
@@ -67,7 +78,7 @@ public class TeamSetService {
     @Scheduled(fixedDelay = 24 * 60 * 60 * 1000)
     public void checkAndReduceScore(String team_code) {
         MemberEntity bombMember = memberRepository.findByBombYn(true);
-        List<ProblemEntity> problems = problemRepository.findByUserIdAndEventTimeBetween(bombMember.getUser_id());
+        List<ProblemEntity> problems = problemRepository.findByUserIdAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
         boolean found = false;
         for (ProblemEntity problem : problems) {
             LocalDateTime eventTime = problem.getEvent_time();
@@ -81,5 +92,15 @@ public class TeamSetService {
             long score = bombMember.getScore();
             bombMember.setScore(score - 10);
         }
+    }
+
+    public void run(){
+        while(true){
+            if (LocalDateTime.now().isAfter(getGlobalBombStartTime())){
+                break;
+            }
+            //crawling
+        }
+        //checkAndReduceScore
     }
 }
