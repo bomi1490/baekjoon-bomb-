@@ -43,7 +43,7 @@ public class problemDao {
     }
 
     public Boolean problem_exist(String user_id, Long problem) {
-        if (problemRepository.findByUser_UserIdAndProblem(user_id, problem) == null) {
+        if (problemRepository.findByUser_UseridAndProblem(user_id, problem) == null) {
             return false;
         } else {
             return true;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface problemRepository extends JpaRepository<ProblemEntity, Long> {
-    ProblemEntity findByUser_UserIdAndProblem(String user_id, Long Problem);
+    ProblemEntity findByUser_UseridAndProblem(String user_id, Long Problem);
 
     //List<ProblemEntity> findByUser_UserId(String user_id);
 
