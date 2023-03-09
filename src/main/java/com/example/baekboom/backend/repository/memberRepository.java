@@ -15,5 +15,5 @@ public interface memberRepository extends JpaRepository<MemberEntity,String> {
 
     List<MemberEntity> findAllByTeam_Teamcode(String team_code);
 
-    MemberEntity findByBombYn(Boolean bomb_yn);
+    MemberEntity findByBombyn(Boolean bomb_yn);
 }

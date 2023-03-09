@@ -23,13 +23,13 @@ import java.util.List;
 public class MemberEntity {
     @Id
     @Column(name = "user_id") // 개인 고유 아이디
-    private String user_id;
+    private String userid;
 
     @Column(name = "score", columnDefinition = "INT NOT NULL default 0")
     private Long score;
 
     @Column(name = "bomb_yn", columnDefinition = "BOOLEAN NOT NULL default 0")
-    private Boolean bomb_yn;
+    private Boolean bombyn;
 
     @ManyToOne
     @JoinColumn(name = "team_code")

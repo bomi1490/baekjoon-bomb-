@@ -5,11 +5,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import com.example.baekboom.backend.dao.*;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class tierProblemcrawling {
 
     private final memberDao memberDao;
@@ -67,6 +70,7 @@ public class tierProblemcrawling {
         problems.remove(already_done);
         Collections.shuffle(problems);
 
+        // 몇개만 추출
         for (int i=0 ; i<cnt ; i++){
             recommend.add(problems.get(i));
         }

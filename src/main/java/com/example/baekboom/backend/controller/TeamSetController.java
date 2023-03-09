@@ -16,10 +16,10 @@ public class TeamSetController {
     @Autowired
     private TeamSetService teamSetService;
 
-    @GetMapping("/")
-    public List<TeamEntity> gettAllTeams() {
-        return teamSetService.getAllTeams();
-    }
+//    @GetMapping("/")
+//    public List<TeamEntity> gettAllTeams() {
+//        return teamSetService.getAllTeams();
+//    }
 
     // 팀 코드를 적으면 getTeamById 메소드 실행.
     @GetMapping("/{team_code}")
