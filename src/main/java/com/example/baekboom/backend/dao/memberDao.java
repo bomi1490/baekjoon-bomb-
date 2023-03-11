@@ -30,10 +30,10 @@ public class memberDao {
     public void saveMember(String team_code, String ID){
         MemberEntity memberEntity = new MemberEntity();
         TeamEntity team = teamRepository.getReferenceById(team_code);
-        memberEntity.setUser_id(ID);
+        memberEntity.setUserid(ID);
         //memberEntity.setName(member.getName());
         memberEntity.setScore(0L);
-        memberEntity.setBomb_yn(false);
+        memberEntity.setBombyn(false);
         memberEntity.setTeam(team);
         memberrepository.save(memberEntity);
     }
@@ -44,7 +44,7 @@ public class memberDao {
 
         List<MemberEntity> memberEntities = memberrepository.findAllByTeam_Teamcode(team_code);
 
-        memberEntities.forEach(item -> map.put(item.getUser_id(), item.getScore()));
+        memberEntities.forEach(item -> map.put(item.getUserid(), item.getScore()));
 
         return map;
     }
@@ -52,20 +52,25 @@ public class memberDao {
     // entity로 수정
     public memberDto getMember(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
-        memberDto member = new memberDto(memberEntity.getUser_id(),
-                memberEntity.getScore(), memberEntity.getBomb_yn(), memberEntity.getTeam().getTeamcode());
+        memberDto member = new memberDto(memberEntity.getUserid(),
+                memberEntity.getScore(), memberEntity.getBombyn(), memberEntity.getTeam().getTeamcode());
 
         return member;
     }
 
+    public Boolean get_Bomb(String user_id){
+        MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
+        return memberEntity.getBombyn();
+    }
+
     public void set_Bomb_True(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
-        memberEntity.setBomb_yn(true);
+        memberEntity.setBombyn(true);
         memberrepository.save(memberEntity);
     }
     public void set_Bomb_False(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
-        memberEntity.setBomb_yn(false);
+        memberEntity.setBombyn(false);
         memberrepository.save(memberEntity);
     }
 
@@ -77,7 +82,7 @@ public class memberDao {
     }
 
     @Transactional
-    public void delete(String user_id){
+    public void member_delete(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
         memberrepository.delete(memberEntity);
     }

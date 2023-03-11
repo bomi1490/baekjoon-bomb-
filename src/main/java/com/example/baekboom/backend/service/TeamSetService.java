@@ -1,11 +1,15 @@
 package com.example.baekboom.backend.service;
 
+import com.example.baekboom.backend.crawling.ProblemSolvercrawling;
 import com.example.baekboom.backend.entity.MemberEntity;
 import com.example.baekboom.backend.entity.ProblemEntity;
 import com.example.baekboom.backend.entity.TeamEntity;
 import com.example.baekboom.backend.repository.teamRepository;
 import com.example.baekboom.backend.repository.memberRepository;
 import com.example.baekboom.backend.repository.problemRepository;
+import lombok.Getter;
+import lombok.Setter;
+import com.example.baekboom.backend.Constant.Tier;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,14 +18,20 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@Getter
+@Setter
 public class TeamSetService extends Thread{
     private final teamRepository teamRepository;
     private final memberRepository memberRepository;
     private final problemRepository problemRepository;
     private LocalDateTime globalBombStartTime;
+    private List<String> teammembers;
+    private final ProblemSolvercrawling problemSolvercrawling;
 
     public void setGlobalBombStartTime(LocalDateTime time){
         this.globalBombStartTime = time;
@@ -31,11 +41,15 @@ public class TeamSetService extends Thread{
         return this.globalBombStartTime;
     }
 
-    public TeamSetService(memberRepository memberRepository, teamRepository teamRepository, problemRepository problemRepository) {
+    public TeamSetService(memberRepository memberRepository, teamRepository teamRepository, problemRepository problemRepository, ProblemSolvercrawling problemSolvercrawling) {
         this.memberRepository = memberRepository;
         this.teamRepository = teamRepository;
         this.problemRepository = problemRepository;
+        this.problemSolvercrawling = problemSolvercrawling;
     }
+
+
+
 
     public List<TeamEntity> getAllTeams() {
         return teamRepository.findAll();
@@ -55,6 +69,11 @@ public class TeamSetService extends Thread{
     public void generateRandomBombPos(String team_code, int hours) {
         TeamEntity team = getTeamById(team_code);
         List<MemberEntity> members = getMembersByTeamCode(team_code);
+
+        List<String> member_names = new ArrayList<>();
+        members.forEach(item -> member_names.add(item.getUserid()));
+        setTeammembers(member_names);
+
         int memberCount = members.size();
         int randomIndex = (int) (Math.random() * members.size());
         // 멤버 리스트를 쭉 돌며 랜덤 생성된 인덱스와 일치하면 Bomb_yn을 true, bomb_pos는 인덱스 + 1로 바꿈.
@@ -62,14 +81,13 @@ public class TeamSetService extends Thread{
         for (int i = 0; i < memberCount; i++) {
             MemberEntity memberEntity = members.get(randomIndex);
             if (i == randomIndex) {
-                memberEntity.setBomb_yn(true);
-                team.setBomb_pos(memberEntity.getUser_id());
+                memberEntity.setBombyn(true);
+                team.setBomb_pos(memberEntity.getUserid());
                 setGlobalBombStartTime(LocalDateTime.now().plusHours(hours));
             } else {
-                memberEntity.setBomb_yn(false);
+                memberEntity.setBombyn(false);
             }
             teamRepository.save(team);
-
         }
     }
 
@@ -77,6 +95,7 @@ public class TeamSetService extends Thread{
     // 일단은 설정 문제는 아니고 그냥 문제를 풀었는지에 대한 여부만 체크
     public void checkAndReduceScore(String team_code) {
         MemberEntity bombMember = memberRepository.findByBombyn(true);
+
         List<ProblemEntity> problems = problemRepository.findByUser_UseridAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
         boolean found = false;
         for (ProblemEntity problem : problems) {
@@ -93,12 +112,16 @@ public class TeamSetService extends Thread{
         }
     }
 
-    public void run(){
+
+    // 팀을 받게 되는 경로
+    // 컨트롤러에서 문제를 crawling해서 가져오기
+    public void run(List<Long> problems, String team_code, Long level){
+        List<String> members = getTeammembers();
         while(true){
             if (LocalDateTime.now().isAfter(getGlobalBombStartTime())){
                 break;
             }
-            //crawling
+            problemSolvercrawling.catch_solver(problems, members, team_code, level);
         }
         //checkAndReduceScore
     }

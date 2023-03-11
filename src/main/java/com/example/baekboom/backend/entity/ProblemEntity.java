@@ -28,6 +28,6 @@ public class ProblemEntity {
     private LocalDateTime event_time;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userid")
     private MemberEntity user;
 }
