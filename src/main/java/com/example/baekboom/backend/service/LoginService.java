@@ -24,6 +24,11 @@ public class LoginService {
     private memberDao memberDao;
 
     public class Tuple<memberDto, lst_rank>{
+
+
+        private final MemberRepository memberRepository;
+        private final AuthenticationManagerBuilder authenticationManagerBuilder;
+        private final JwtTokenProvider jwtTokenProvider;
         private memberDto memberDto;
         private lst_rank lst_rank;
 

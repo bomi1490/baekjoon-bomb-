@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface memberRepository extends JpaRepository<MemberEntity,String> {
@@ -17,6 +18,8 @@ public interface memberRepository extends JpaRepository<MemberEntity,String> {
 
 
     MemberEntity findByBombyn(Boolean bomb_yn);
+
+    Optional<Member> findByMemberId(String username);
 
 
 }

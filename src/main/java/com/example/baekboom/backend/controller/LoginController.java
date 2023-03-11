@@ -2,18 +2,12 @@ package com.example.baekboom.backend.controller;
 
 
 import com.example.baekboom.backend.dto.memberDto;
-import com.example.baekboom.backend.dto.memberRankDto;
 import com.example.baekboom.backend.service.LoginService;
 import com.example.baekboom.backend.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.baekboom.backend.dto.TokenInfo;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -42,10 +36,10 @@ public class LoginController {
     }*/
 
     @PostMapping("/login")
-    public TokenInfo login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
-        String memberId = memberLoginRequestDto.getMemberId();
-        String password = memberLoginRequestDto.getPassword();
-        TokenInfo tokenInfo = memberService.login(memberId, password);
+    public TokenInfo login(@RequestBody memberDto memberDto) {
+        String user_id = memberDto.getUser_id();
+        String team_code = memberDto.getTeam_code();
+        TokenInfo tokenInfo = LoginService.login(user_id, user_id);
         return tokenInfo;
     }
 }
