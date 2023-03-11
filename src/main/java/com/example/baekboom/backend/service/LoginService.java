@@ -37,6 +37,11 @@ public class LoginService {
         this.memberDao =memberDao;
     }
 
+    public String login_teamName(String ID){
+        String team_name = memberDao.getMember(ID).getTeam_code();
+        return team_name;
+    }
+
     public Tuple<memberDto, List<memberRankDto>> login(String ID){
         Tuple<memberDto, List<memberRankDto>> login_info = new Tuple<>();
         List<memberRankDto> memberRankDtos = new ArrayList<>();

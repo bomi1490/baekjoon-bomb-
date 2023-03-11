@@ -77,7 +77,7 @@ public class memberDao {
     }
 
     @Transactional
-    public void delete(String user_id){
+    public void member_delete(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
         memberrepository.delete(memberEntity);
     }

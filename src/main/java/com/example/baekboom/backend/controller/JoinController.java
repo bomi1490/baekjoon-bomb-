@@ -3,22 +3,11 @@ package com.example.baekboom.backend.controller;
 
 import com.example.baekboom.backend.service.JoinService;
 import com.example.baekboom.backend.service.LoginService;
-import com.example.baekboom.backend.service.LoginService.Tuple;
-import com.example.baekboom.backend.dto.memberDto;
-import com.example.baekboom.backend.dto.memberRankDto;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 public class JoinController {
 
     private JoinService joinService;
@@ -31,40 +20,47 @@ public class JoinController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/api")
     public String index(){
 
-        return "index";
+        return "dsfsdfsdfsdfs";
     }
 
-    @GetMapping("/team_building")
-    public String team_make_page(){
-        return "팀장 구현하는 화면";
-    }
+//    @GetMapping("/team_building")
+//    public String team_make_page(){
+//        return "팀장 구현하는 화면";
+//    }
 
 
     @PostMapping("/team_building")
-    public String team_make(Model model, @RequestParam String team_code, @RequestParam String team_leader){
+    public void team_make(@RequestBody String inputCode, @RequestBody String inputId){
         // 팀 조인
-        joinService.teamJoin(team_code, team_leader, "1");
-
-        return "redirect:/";
+        joinService.teamJoin(inputCode, inputId, "1");
     }
 
-    @GetMapping("/join")
-    public String member_make_page(){
+//    @GetMapping("/join")
+//    public String member_make_page(){
+//
+//        return "멤버 생성하는 화면";
+//    }
 
-        return "멤버 생성하는 화면";
-    }
-
-    @PostMapping("join")
-    public String member_make(Model model, @RequestParam String team_code, @RequestParam String member_id){
+    @PostMapping("/member")
+    public void member_make(@RequestBody String inputCode, @RequestBody String inputId){
         // 멤버 넣기
-        joinService.memberJoin(team_code, member_id);
+        joinService.memberJoin(inputCode, inputId);
 
-        return "redirect:/";
     }
 
+
+    @PostMapping("/level")
+    public void change_level(@RequestBody String inputCode, @RequestBody String level){
+        joinService.changed_level(inputCode, level);
+    }
+
+    @DeleteMapping("/member")
+    public void delete_member(@RequestBody String inputId){
+        joinService.member_delete(inputId);
+    }
 
 
 

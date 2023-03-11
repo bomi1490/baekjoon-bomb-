@@ -9,6 +9,7 @@ import com.example.baekboom.backend.repository.memberRepository;
 import com.example.baekboom.backend.repository.problemRepository;
 import lombok.Getter;
 import lombok.Setter;
+import com.example.baekboom.backend.Constant.Tier;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -45,6 +46,8 @@ public class TeamSetService extends Thread{
         this.problemRepository = problemRepository;
         this.problemSolvercrawling = problemSolvercrawling;
     }
+
+
 
     public List<TeamEntity> getAllTeams() {
         return teamRepository.findAll();
