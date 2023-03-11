@@ -39,7 +39,7 @@ public class LoginController {
     public TokenInfo login(@RequestBody memberDto memberDto) {
         String user_id = memberDto.getUser_id();
         String team_code = memberDto.getTeam_code();
-        TokenInfo tokenInfo = LoginService.login(user_id, user_id);
+        TokenInfo tokenInfo = LoginService.login(user_id, team_code);
         return tokenInfo;
     }
 }
