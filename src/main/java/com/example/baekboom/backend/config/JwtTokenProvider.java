@@ -1,32 +1,41 @@
 package com.example.baekboom.backend.config;
 
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import com.example.baekboom.backend.dto.TokenInfo;
 import lombok.extern.slf4j.Slf4j;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
-
 import javax.annotation.PostConstruct;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class JwtTokenProvider {
 
-    private final String key;
+    private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        this.key = Base64.getEncoder().encodeToString(secretKey.getBytes());
+
+        byte[] targetBytes = secretKey.getBytes();
+        // 인코딩
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] encodedBytes = encoder.encode(targetBytes);
+
+        // byte[] keyBytes = BASE64.getEncoder(secretKey);
+        this.key = Keys.hmacShaKeyFor(encodedBytes);
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
