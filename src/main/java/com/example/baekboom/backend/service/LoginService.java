@@ -92,7 +92,7 @@ public class LoginService {
     }
 
     public static TokenInfo login(String user_id, String team_code) {
-        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
+        // 1. Login 유저 아이디, 팀코드를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user_id, team_code);
 

@@ -1,7 +1,6 @@
 package com.example.baekboom.backend.dto;
 
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@Data
 public class memberDto {
 
     public memberDto(String user_id, Long score, Boolean bomb_yn, String team_code){
