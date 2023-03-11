@@ -8,6 +8,7 @@ import com.example.baekboom.backend.dto.memberRankDto;
 import com.example.baekboom.backend.dto.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,10 @@ public class LoginService {
     private memberRepository memberRepository;
     private static AuthenticationManagerBuilder authenticationManagerBuilder;
     private  JwtTokenProvider jwtTokenProvider;
+
+    private AuthenticationManager authenticationManager;
+
+
 
     public class Tuple<memberDto, lst_rank>{
 
@@ -52,8 +57,9 @@ public class LoginService {
     }
 
     @Autowired
-    public LoginService(memberDao memberDao){
+    public LoginService(memberDao memberDao, AuthenticationManager authenticationManager){
         this.memberDao =memberDao;
+        this.authenticationManager = authenticationManager;
     }
 
     public String login_teamName(String ID){
@@ -66,13 +72,13 @@ public class LoginService {
     public Tuple<memberDto, List<memberRankDto>> login(String ID){
         Tuple<memberDto, List<memberRankDto>> login_info = new Tuple<>();
         List<memberRankDto> memberRankDtos = new ArrayList<>();
-        
+
         // 개인 가져오기
         memberDto memberDto = memberDao.getMember(ID);
         Map<String, Long> Team_members = memberDao.getTeamMember(memberDto.getTeam_code());
         List<String> KeySet = new ArrayList<>(Team_members.keySet());
         KeySet.sort((o1, o2) -> Team_members.get(o2).compareTo(Team_members.get(o1)));
-        
+
         // 랭킹을 구하는 방법
         Long number = 10000L;
         int same_rank = 0;
@@ -91,15 +97,16 @@ public class LoginService {
         return login_info;
     }
 
+   @Autowired
     public static TokenInfo login(String user_id, String team_code) {
         // 1. Login 유저 아이디, 팀코드를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user_id, team_code);
-
+        System.out.println("authenticationToken :::" + authenticationToken);
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+        System.out.println("authentication :::" + authentication);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = JwtTokenProvider.generateToken(authentication);
 
