@@ -2,15 +2,14 @@ package com.example.baekboom.backend.crawling;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.example.baekboom.backend.dao.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class tierProblemcrawling {
@@ -23,28 +22,49 @@ public class tierProblemcrawling {
         this.problemDao = problemDao;
     }
 
-    public Elements crawl_document(String URL){
-        Elements elements = new Elements();
+    public List<Elements> crawl_document(String URL){
+        List<Elements> elements = new ArrayList<>();
+        Elements elements1 = new Elements();
+        Elements elements2 = new Elements();
         try{
             Document doc = Jsoup.connect(URL).get();
-            elements = doc.select("td.list_problem_id");
-        } catch(IOException e){
+            elements1 = doc.select("td.list_problem_id");
+            elements2 = doc.select("tr td:nth-child(2) a");
+            elements.add(elements1);
+            elements.add(elements2);
+        } catch (IOException e){
             e.printStackTrace();
         }
-
         return elements;
-    }
 
-    public List<Long> tierProblem(Long tier){
-        List<Long> problems = new ArrayList<>();
+    }
+//    public Elements crawl_document(String URL){
+//        Elements elements = new Elements();
+//        Elements elements2 = new Elements();
+//        try{
+//            Document doc = Jsoup.connect(URL).get();
+//            elements = doc.select("td.list_problem_id");
+//
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//        return elements;
+//    }
+
+
+    public Map<Long, String> tierProblem(Long tier){
+        Map<Long, String> problems = new HashMap<>();
         int page = 1;
 
         while(true) {
             String crawlingURL = String.format("https://www.acmicpc.net/problemset?sort=no_asc&tier=%d&page=%d", tier, page);
-            Elements elements = crawl_document(crawlingURL);
+            List<Elements> elements = crawl_document(crawlingURL);
 
             if (elements.isEmpty()){ break;}
-            elements.eachText().forEach(item -> problems.add(Long.parseLong(item)));
+            for (int i =0; i == elements.get(0).size(); i++){
+                problems.put(Long.parseLong(elements.get(0).get(i).text()), elements.get(1).get(i).text());
+            }
             page++;
         }
 
@@ -62,18 +82,19 @@ public class tierProblemcrawling {
     //tier에서 건진 것 중에서 get_already_done 메소드에서 가져온 문제를 제거한 후, random으로 cnt개를 고름
     // 매개변수로 tier와 team이름, 문제 개수가 꼭 있어야 함
 
-    public List<Long> recommend_problems(Long tier, String team, int cnt){
-        List<Long> recommend = new ArrayList<>();
+    public Map<Long, String> recommend_problems(Long tier, String team, int cnt){
+        Map<Long, String> recommend = new HashMap<>();
 
         // DB 처리 필요함
         List<Long> already_done = get_already_done(team, tier);
-        List<Long> problems = tierProblem(tier);
+        Map<Long, String> problems= tierProblem(tier);
         problems.remove(already_done);
-        Collections.shuffle(problems);
+        List<Long> numbers = problems.keySet().stream().toList();
+        Collections.shuffle(numbers);
 
         // 몇개만 추출
         for (int i=0 ; i<cnt ; i++){
-            recommend.add(problems.get(i));
+            recommend.put(numbers.get(i), problems.get(numbers.get(i)));
         }
 
         return recommend;
