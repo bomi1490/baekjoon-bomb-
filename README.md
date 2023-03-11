@@ -1,4 +1,4 @@
-# baekjoon-bomb-
+# 백준 폭탄 돌리기 (Baekjoon-bomb)
 
 <br>
 
