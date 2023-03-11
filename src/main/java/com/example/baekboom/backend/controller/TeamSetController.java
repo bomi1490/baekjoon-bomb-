@@ -58,12 +58,10 @@ public class TeamSetController {
 //    public void generateRandomBombPos(@PathVariable String team_code, int hours) {
 //        teamSetService.generateRandomBombPos(team_code, hours);
 //    }
-//
-//    //
 
-//    @GetMapping("/{team_code}/check-score")
-//    public ResponseEntity<Void> checkScore(@PathVariable String team_code){
-//        teamSetService.checkAndReduceScore(team_code);
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping("/{team_code}/check-score")
+    public ResponseEntity<Void> checkScore(@PathVariable String team_code){
+        teamSetService.checkAndReduceScore(team_code);
+        return ResponseEntity.ok().build();
+    }
 }

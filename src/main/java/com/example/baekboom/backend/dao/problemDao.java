@@ -43,12 +43,6 @@ public class problemDao {
         return return_problems;
     }
 
-    public List<Long> get_problems_with_level(String user_id, Long level){
-        List<ProblemEntity> problems = problemRepository.findAllByLevelAndUser_Userid(level, user_id);
-        List<Long> return_problems = new ArrayList<>();
-        problems.forEach(item -> return_problems.add(item.getLevel()));
-        return return_problems;
-    }
 
 
     public Boolean problem_exist(String user_id, Long problem) {

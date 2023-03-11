@@ -96,7 +96,7 @@ public class TeamSetService extends Thread{
     public void checkAndReduceScore(String team_code) {
         MemberEntity bombMember = memberRepository.findByBombyn(true);
 
-        List<ProblemEntity> problems = problemRepository.findByUser_UseridAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
+        List<ProblemEntity> problems = problemRepository.findByUser_UseridAndEventTimeBetween(bombMember.getUserid(), globalBombStartTime, LocalDateTime.now());
         boolean found = false;
         for (ProblemEntity problem : problems) {
             LocalDateTime eventTime = problem.getEvent_time();
