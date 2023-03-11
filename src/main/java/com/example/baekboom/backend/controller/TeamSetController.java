@@ -16,7 +16,7 @@ public class TeamSetController {
     @Autowired
     private TeamSetService teamSetService;
 
-    @GetMapping("/")
+    @GetMapping("/{any}")
     public List<TeamEntity> gettAllTeams() {
         return teamSetService.getAllTeams();
     }
@@ -39,9 +39,9 @@ public class TeamSetController {
     }
 
     //
-    @GetMapping("/{team_code}/check-score")
-    public ResponseEntity<Void> checkScore(@PathVariable String team_code){
-        teamSetService.checkAndReduceScore(team_code);
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/{team_code}/check-score")
+//    public ResponseEntity<Void> checkScore(@PathVariable String team_code){
+//        teamSetService.checkAndReduceScore(team_code);
+//        return ResponseEntity.ok().build();
+//    }
 }
