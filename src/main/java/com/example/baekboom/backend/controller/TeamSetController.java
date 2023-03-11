@@ -5,17 +5,31 @@ import com.example.baekboom.backend.dto.memberDto;
 import com.example.baekboom.backend.entity.MemberEntity;
 import com.example.baekboom.backend.entity.TeamEntity;
 import com.example.baekboom.backend.service.TeamSetService;
+import com.example.baekboom.backend.service.LoginService;
+import com.example.baekboom.backend.dto.memberRankDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TeamSetController {
     @Autowired
     private TeamSetService teamSetService;
+    private LoginService loginService;
+
+
+    // 해당 코드를 통해서 rank와 id, score 그리고 폭탄 위치인 사람이 나타난다.
+    @GetMapping("/rank")
+    public List<memberRankDto> team_rank(String inputId){
+        LoginService.Tuple<memberDto, List<memberRankDto>> rank =  loginService.login(inputId);
+        return rank.getLst_rank();
+    }
+
+
 
 
 //    @GetMapping("/")

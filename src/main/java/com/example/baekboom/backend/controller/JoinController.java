@@ -19,17 +19,13 @@ public class JoinController {
         this.loginService = loginService;
     }
 
-
-    @GetMapping("/api")
+    // 대문
+    @GetMapping("/")
     public String index(){
 
-        return "dsfsdfsdfsdfs";
+        return "";
     }
 
-//    @GetMapping("/team_building")
-//    public String team_make_page(){
-//        return "팀장 구현하는 화면";
-//    }
 
 
     @PostMapping("/team_building")
@@ -38,11 +34,6 @@ public class JoinController {
         joinService.teamJoin(inputCode, inputId, "1");
     }
 
-//    @GetMapping("/join")
-//    public String member_make_page(){
-//
-//        return "멤버 생성하는 화면";
-//    }
 
     @PostMapping("/member")
     public void member_make(@RequestBody String inputCode, @RequestBody String inputId){

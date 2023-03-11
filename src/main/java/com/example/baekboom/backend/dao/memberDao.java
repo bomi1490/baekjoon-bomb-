@@ -58,6 +58,11 @@ public class memberDao {
         return member;
     }
 
+    public Boolean get_Bomb(String user_id){
+        MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
+        return memberEntity.getBombyn();
+    }
+
     public void set_Bomb_True(String user_id){
         MemberEntity memberEntity = memberrepository.getReferenceById(user_id);
         memberEntity.setBombyn(true);

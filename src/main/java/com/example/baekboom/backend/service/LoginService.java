@@ -41,6 +41,8 @@ public class LoginService {
         String team_name = memberDao.getMember(ID).getTeam_code();
         return team_name;
     }
+    // 기성 코드
+
 
     public Tuple<memberDto, List<memberRankDto>> login(String ID){
         Tuple<memberDto, List<memberRankDto>> login_info = new Tuple<>();
@@ -57,8 +59,10 @@ public class LoginService {
         int same_rank = 0;
         for (int i = 1; i < KeySet.size()+1; i++) {
             memberRankDto member = new memberRankDto();
-            member.setUser_id(KeySet.get(i-1));
+            String id = KeySet.get(i-1);
+            member.setUser_id(id);
             member.setScore(Team_members.get(KeySet.get(i-1)));
+            member.setBombYn(memberDao.get_Bomb(id));
             if (number == Team_members.get(KeySet.get(i-1))){member.setRank(same_rank);}
             else {member.setRank(i);
                 same_rank = i;}

@@ -39,14 +39,6 @@ public class LoginController {
         Map<String, String> map = new HashMap<>();
         String team_code = loginService.login_teamName(inputId);
         map.put("inputCode", team_code);
-        //tokenService.register(Id, token);
-//        LoginService.Tuple<memberDto, List<memberRankDto>> tuple = loginService.login(Id);
-//        // member에 대한 DTO가 전송 : id, 점수, 폭탄 유무, 팀 코드 등
-//        model.addAttribute("member", tuple.getMemberDto());
-//        // rank에 대한 DTO들이 전송 : id, 점수, 등수가 담겨있는 Dto의 List가 전송된다.
-//        model.addAttribute("rank", tuple.getLst_rank());
-//        String url = String.format("redirect:/personal/%s/%s", tuple.getMemberDto().getTeam_code(), tuple.getMemberDto().getUser_id());
-
 
         return map;
     }
