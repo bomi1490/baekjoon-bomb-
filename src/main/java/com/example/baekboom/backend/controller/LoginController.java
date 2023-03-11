@@ -27,10 +27,6 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/id_login")
-    public String login_page(){
-        return "로그인하는 페이지";
-    }
 
 
     // 만약 안되면 map이 아니라 String으로 바꿔보기
