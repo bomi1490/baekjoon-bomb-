@@ -67,7 +67,6 @@ public class tierProblemcrawling {
             }
             page++;
         }
-
         return problems;
     }
 

@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Table(name="member")
 public class MemberEntity implements UserDetails {
     @Id
-    @Column(name = "user_id") // 개인 고유 아이디
+    @Column(name = "userid") // 개인 고유 아이디
     private String userid;
 
     @Column(name = "score", columnDefinition = "INT NOT NULL default 0")
