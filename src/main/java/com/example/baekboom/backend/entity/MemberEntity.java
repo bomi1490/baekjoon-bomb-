@@ -56,12 +56,6 @@ public class MemberEntity implements UserDetails {
 //        this.bomb_pos = bomb_pos;
 //    }
 
-    @Id
-    @Column(updatable = false, unique = true, nullable = false)
-    private String memberId;
-
-    @Column(nullable = false)
-    private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -76,12 +70,12 @@ public class MemberEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return memberId;
+        return userid;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return team.getTeamcode();
     }
 
     @Override

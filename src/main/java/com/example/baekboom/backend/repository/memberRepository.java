@@ -19,7 +19,7 @@ public interface memberRepository extends JpaRepository<MemberEntity,String> {
 
     MemberEntity findByBombyn(Boolean bomb_yn);
 
-    Optional<Member> findByMemberId(String username);
+
 
 
 }

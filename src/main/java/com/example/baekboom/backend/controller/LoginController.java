@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.baekboom.backend.dto.TokenInfo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
-@RequestMapping("/members")
 public class LoginController {
 
     private final TokenService tokenService;
@@ -25,15 +27,15 @@ public class LoginController {
 
 
 
-    // 만약 안되면 map이 아니라 String으로 바꿔보기
-  /*  @GetMapping("/member")
+
+    @GetMapping("/member")
     public Map<String, String> register(@RequestBody String token, @RequestParam String inputId){
         Map<String, String> map = new HashMap<>();
         String team_code = loginService.login_teamName(inputId);
         map.put("inputCode", team_code);
 
         return map;
-    }*/
+    }
 
     @PostMapping("/login")
     public TokenInfo login(@RequestBody memberDto memberDto) {
