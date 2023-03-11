@@ -75,10 +75,9 @@ public class TeamSetService extends Thread{
 
     // 24시간 내에 event_time이 들어오지 못한다면 점수 10점 감점.
     // 일단은 설정 문제는 아니고 그냥 문제를 풀었는지에 대한 여부만 체크
-    @Scheduled(fixedDelay = 24 * 60 * 60 * 1000)
     public void checkAndReduceScore(String team_code) {
-        MemberEntity bombMember = memberRepository.findByBombYn(true);
-        List<ProblemEntity> problems = problemRepository.findByUserIdAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
+        MemberEntity bombMember = memberRepository.findByBombyn(true);
+        List<ProblemEntity> problems = problemRepository.findByUser_UseridAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
         boolean found = false;
         for (ProblemEntity problem : problems) {
             LocalDateTime eventTime = problem.getEvent_time();

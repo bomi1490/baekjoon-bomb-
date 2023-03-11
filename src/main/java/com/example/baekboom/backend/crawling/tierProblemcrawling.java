@@ -49,29 +49,29 @@ public class tierProblemcrawling {
     }
 
     //DB에서 List로 추출하기 : 팀이름으로 DB 검색하여 해당 팀의 회원들이 푼 문제를 가져옴
-    public List<Long> get_already_done(String team, Long tier){
-        List<Long> problems = new ArrayList<>();
-        memberDao.getTeamMember(team).keySet().forEach(item -> problems.addAll(problemDao.get_problems_with_level(item,tier)));
-        return null;
-    }
+//    public List<Long> get_already_done(String team, Long tier){
+//        List<Long> problems = new ArrayList<>();
+//        memberDao.getTeamMember(team).keySet().forEach(item -> problems.addAll(problemDao.get_problems_with_level(item,tier)));
+//        return null;
+//    }
 
 
     //tier에서 건진 것 중에서 get_already_done 메소드에서 가져온 문제를 제거한 후, random으로 cnt개를 고름
     // 매개변수로 tier와 team이름, 문제 개수가 꼭 있어야 함
-    public List<Long> recommend_problems(Long tier, String team, int cnt){
-        List<Long> recommend = new ArrayList<>();
-
-        // DB 처리 필요함
-        List<Long> already_done = get_already_done(team, tier);
-        List<Long> problems = tierProblem(tier);
-        problems.remove(already_done);
-        Collections.shuffle(problems);
-
-        for (int i=0 ; i<cnt ; i++){
-            recommend.add(problems.get(i));
-        }
-
-        return recommend;
-
-    }
+//    public List<Long> recommend_problems(Long tier, String team, int cnt){
+//        List<Long> recommend = new ArrayList<>();
+//
+//        // DB 처리 필요함
+//        List<Long> already_done = get_already_done(team, tier);
+//        List<Long> problems = tierProblem(tier);
+//        problems.remove(already_done);
+//        Collections.shuffle(problems);
+//
+//        for (int i=0 ; i<cnt ; i++){
+//            recommend.add(problems.get(i));
+//        }
+//
+//        return recommend;
+//
+//    }
 }
