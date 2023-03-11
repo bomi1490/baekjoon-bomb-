@@ -95,20 +95,21 @@ public class TeamSetService extends Thread{
     // 일단은 설정 문제는 아니고 그냥 문제를 풀었는지에 대한 여부만 체크
     public void checkAndReduceScore(String team_code) {
         MemberEntity bombMember = memberRepository.findByBombyn(true);
-        //List<ProblemEntity> problems = problemRepository.findByUserIdAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
-//        boolean found = false;
-//        for (ProblemEntity problem : problems) {
-//            LocalDateTime eventTime = problem.getEvent_time();
-//            LocalDateTime now = LocalDateTime.now();
-//            if (eventTime.isAfter(now.minusDays(1)) && eventTime.isBefore(now)) {
-//                found = true;
-//                break;
-//            }
-//        }
-//        if (!found) {
-//            long score = bombMember.getScore();
-//            bombMember.setScore(score - 10);
-//        }
+
+        List<ProblemEntity> problems = problemRepository.findByUser_UseridAndEventTimeBetween(bombMember.getUser_id(), globalBombStartTime, LocalDateTime.now());
+        boolean found = false;
+        for (ProblemEntity problem : problems) {
+            LocalDateTime eventTime = problem.getEvent_time();
+            LocalDateTime now = LocalDateTime.now();
+            if (eventTime.isAfter(now.minusDays(1)) && eventTime.isBefore(now)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            long score = bombMember.getScore();
+            bombMember.setScore(score - 10);
+        }
     }
 
 

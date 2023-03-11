@@ -22,13 +22,18 @@ public class TeamSetController {
     private LoginService loginService;
 
 
+    @GetMapping("/{any}")
+    public List<TeamEntity> gettAllTeams() {
+        return teamSetService.getAllTeams();
+    }
+
+
     // 해당 코드를 통해서 rank와 id, score 그리고 폭탄 위치인 사람이 나타난다.
     @GetMapping("/rank")
     public List<memberRankDto> team_rank(String inputId){
         LoginService.Tuple<memberDto, List<memberRankDto>> rank =  loginService.login(inputId);
         return rank.getLst_rank();
     }
-
 
 
 
@@ -55,6 +60,7 @@ public class TeamSetController {
 //    }
 //
 //    //
+
 //    @GetMapping("/{team_code}/check-score")
 //    public ResponseEntity<Void> checkScore(@PathVariable String team_code){
 //        teamSetService.checkAndReduceScore(team_code);

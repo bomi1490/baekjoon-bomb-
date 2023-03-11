@@ -17,4 +17,6 @@ public interface problemRepository extends JpaRepository<ProblemEntity, Long> {
 
     // start와 end 사이에 이벤트를 검색한다.
     //List<ProblemEntity> findByUseridAndEventTimeBetween(String user_id, LocalDateTime startTime, LocalDateTime endTime);
+
+
 }
