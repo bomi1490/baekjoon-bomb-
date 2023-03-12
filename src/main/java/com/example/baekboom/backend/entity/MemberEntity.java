@@ -45,12 +45,6 @@ public class MemberEntity implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ProblemEntity> problems;
 
-    public void setTeam(TeamEntity team){
-        this.team = team;
-        if (!team.getMembers().contains(this)){
-            team.getMembers().add(this);
-        }
-    }
 
 //    public void setBombPos(String bomb_pos) {
 //        this.bomb_pos = bomb_pos;

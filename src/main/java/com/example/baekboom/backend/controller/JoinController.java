@@ -6,6 +6,8 @@ import com.example.baekboom.backend.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @RestController
 public class JoinController {
@@ -29,7 +31,10 @@ public class JoinController {
 
 
     @PostMapping("/team_building")
-    public void team_make(@RequestBody String inputCode, @RequestBody String inputId){
+    public void team_make(@RequestBody Map<String, String> requestMap) {
+        System.out.println(requestMap.get("inputCode"));
+        String inputCode = requestMap.get("inputCode");
+        String inputId = requestMap.get("inputId");
         // 팀 조인
         joinService.teamJoin(inputCode, inputId, "1");
     }

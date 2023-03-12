@@ -28,9 +28,8 @@ public class JoinService {
 
     // 처음에 팀을 만들 때 사용되는 Service 구문
     public void teamJoin(String team_code, String team_leader, String level){
-        Tier tier = Tier.valueOf(level);
-        Long ordinal = Long.valueOf(tier.ordinal());
-        teamDao.saveTeam(team_code, ordinal, team_leader);
+        Long index = Long.valueOf(Tier.Bronze5.getIndex());
+        teamDao.saveTeam(team_code, index, team_leader);
         memberDao.saveMember(team_code, team_leader);
     }
 
