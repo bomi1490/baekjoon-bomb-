@@ -19,6 +19,7 @@ public class LoginController {
     private final TokenService tokenService;
     private final LoginService loginService;
 
+
     @Autowired
     public LoginController(TokenService tokenService, LoginService loginService){
         this.tokenService = tokenService;
@@ -28,7 +29,7 @@ public class LoginController {
 
 
 
-    @GetMapping("/member")
+    @GetMapping("/login")
     public Map<String, String> register(@RequestBody String token, @RequestParam String inputId){
         Map<String, String> map = new HashMap<>();
         String team_code = loginService.login_teamName(inputId);
@@ -37,13 +38,14 @@ public class LoginController {
         return map;
     }
 
-    @PostMapping("/login")
-    public TokenInfo login(@RequestBody memberDto memberDto) {
-        String user_id = memberDto.getUser_id();
-        String team_code = memberDto.getTeam_code();
-        System.out.println("user_id :::" + user_id);
-        System.out.println("team_code :::" + team_code);
-        TokenInfo tokenInfo = LoginService.login(user_id, team_code);
+
+
+
+    @GetMapping("/member")
+    public TokenInfo login(@RequestParam String inputId) {
+        System.out.println(inputId);
+        String team_code = loginService.login_teamName(inputId);
+        TokenInfo tokenInfo = loginService.login(inputId, team_code);
         return tokenInfo;
     }
 }
