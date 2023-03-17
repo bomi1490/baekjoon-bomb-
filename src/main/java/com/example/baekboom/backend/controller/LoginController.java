@@ -40,12 +40,12 @@ public class LoginController {
 
 
 
+
     @GetMapping("/member")
     public TokenInfo login(@RequestParam String inputId) {
         System.out.println(inputId);
         String team_code = loginService.login_teamName(inputId);
         TokenInfo tokenInfo = loginService.login(inputId, team_code);
-
         return tokenInfo;
     }
 }
