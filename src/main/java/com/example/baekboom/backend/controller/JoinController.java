@@ -41,7 +41,9 @@ public class JoinController {
 
 
     @PostMapping("/member")
-    public void member_make(@RequestBody String inputCode, @RequestBody String inputId){
+    public void member_make(@RequestBody Map<String, String> requestMap){
+        String inputCode = requestMap.get("inputCode");
+        String inputId = requestMap.get("inputId");
         // 멤버 넣기
         joinService.memberJoin(inputCode, inputId);
 

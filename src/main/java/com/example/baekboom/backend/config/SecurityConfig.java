@@ -37,7 +37,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .antMatchers("/team_building").permitAll()
                 .antMatchers("/member").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/test").hasRole("USER")
+                .antMatchers("/personal").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

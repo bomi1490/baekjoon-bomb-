@@ -41,12 +41,11 @@ public class LoginController {
 
 
     @GetMapping("/member")
-    public Map<String, String> login(@RequestParam String inputId) {
+    public TokenInfo login(@RequestParam String inputId) {
         System.out.println(inputId);
         String team_code = loginService.login_teamName(inputId);
-        //TokenInfo tokenInfo = loginService.login(inputId, team_code);
-        Map<String, String> map = new HashMap<>();
-        map.put("inputCode", team_code);
-        return map;
+        TokenInfo tokenInfo = loginService.login(inputId, team_code);
+
+        return tokenInfo;
     }
 }
