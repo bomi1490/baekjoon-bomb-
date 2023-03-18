@@ -37,10 +37,6 @@ public class LoginController {
 
         return map;
     }
-
-
-
-
     @GetMapping("/member")
     public TokenInfo login(@RequestParam String inputId) {
         System.out.println(inputId);

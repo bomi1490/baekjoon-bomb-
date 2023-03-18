@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -67,7 +68,9 @@ public class LoginService {
     }
 
     public String login_teamName(String ID){
+        System.out.println("asdfasdf:::: "+ID);
         String team_name = memberDao.getMember(ID).getTeam_code();
+        System.out.println(team_name);
         return team_name;
     }
     // 기성 코드
@@ -101,13 +104,13 @@ public class LoginService {
         return login_info;
     }
 
-   @Autowired
+    @Autowired
     public static TokenInfo login(String user_id, String team_code) {
         // 1. Login 유저 아이디, 팀코드를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 fail
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user_id, team_code, Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
         authenticationToken.setDetails("1111");
-        System.out.println(authenticationToken);
+        System.out.println("authenticationToken ::: "+ authenticationToken);
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
