@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class tierProblemcrawling {
@@ -61,12 +62,13 @@ public class tierProblemcrawling {
             String crawlingURL = String.format("https://www.acmicpc.net/problemset?sort=no_asc&tier=%d&page=%d", tier, page);
             List<Elements> elements = crawl_document(crawlingURL);
 
-            if (elements.isEmpty()){ break;}
-            for (int i =0; i == elements.get(0).size(); i++){
+            if (elements.get(0).size() == 0){ break;}
+            for (int i =0; i < elements.get(0).size() -1; i++){
                 problems.put(Long.parseLong(elements.get(0).get(i).text()), elements.get(1).get(i).text());
             }
             page++;
         }
+        System.out.println(problems);
         return problems;
     }
 
@@ -88,7 +90,8 @@ public class tierProblemcrawling {
         List<Long> already_done = get_already_done(team, tier);
         Map<Long, String> problems= tierProblem(tier);
         problems.remove(already_done);
-        List<Long> numbers = problems.keySet().stream().toList();
+        List<Long> numbers = problems.keySet().stream().collect(Collectors.toList());
+        System.out.println(numbers);
         Collections.shuffle(numbers);
 
         // 몇개만 추출

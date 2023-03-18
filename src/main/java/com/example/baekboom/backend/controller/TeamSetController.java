@@ -18,10 +18,16 @@ import java.util.Map;
 
 @RestController
 public class TeamSetController {
-    @Autowired
     private TeamSetService teamSetService;
     private LoginService loginService;
     private tierProblemcrawling tierProblemCrawling;
+
+    @Autowired
+    public TeamSetController(TeamSetService teamSetService, LoginService loginService, tierProblemcrawling tierProblemcrawling){
+        this.teamSetService = teamSetService;
+        this.tierProblemCrawling = tierProblemcrawling;
+        this.loginService = loginService;
+    }
 
 
     @GetMapping("/{any}")
@@ -54,8 +60,12 @@ public class TeamSetController {
     }
 
     // 팀 코드를 url을 통해 입력받고, service에서 generateRandomBombPos 메소드 실행.
-    @PostMapping("/{team_code}/random-bomb-pos")
-    public Map<Long, String> generateRandomBombPos(@PathVariable String team_code, LocalDateTime startTime, LocalDateTime endTime, Long level, int cnt) {
+    @PostMapping("/random-bomb-pos")
+    public Map<Long, String> generateRandomBombPos(@RequestParam String team_code) {
+        LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime endTime = startTime.plusMinutes(10);
+        int cnt = 3;
+        Long level = 3L;
         Map<Long, String> problem = tierProblemCrawling.recommend_problems(level, team_code, cnt);
         List<Long> problems = problem.keySet().stream().toList();
         teamSetService.generateRandomBombPos(team_code, startTime, endTime);
